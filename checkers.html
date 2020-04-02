@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+        * {}
+
+        #board {
+            margin: 20px;
+            display: inline-block;
+            border: 1px solid #aaaaaa;
+        }
+
+        .rw {
+            display: flex;
+        }
+
+        .cl {
+            width: 50px;
+            height: 50px;
+        }
+
+        .node {
+            background-color: #cccccc;
+        }
+
+        .checker {
+            position: absolute;
+            width: 33px;
+            height: 33px;
+            margin: 5px;
+            border-radius: 20px;
+            box-shadow: 2px 2px 5px grey;
+            border: 2px dotted;
+        }
+
+        .black {
+            background-color: #666666;
+        }
+
+        .white {
+            background-color: white;
+        }
+
+        .seld {
+            border: 2px dotted red;
+            width: 33px;
+            height: 33px;
+        }
+
+        .daam {
+            border: 2px dotted red;
+            width: 33px;
+            height: 33px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="board"></div>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            var board = board();
+
+            var checkers = [
+                [1, -1, 1, -1, 1, -1, 1, -1],
+                [-1, 1, -1, 1, -1, 1, -1, 1],
+                [1, -1, 1, -1, 1, -1, 1, -1],
+                [-1, 0, -1, 0, -1, 0, -1, 0],
+                [0, -1, 0, -1, 0, -1, 0, -1],
+                [-1, 2, -1, 2, -1, 2, -1, 2],
+                [2, -1, 2, -1, 2, -1, 2, -1],
+                [-1, 2, -1, 2, -1, 2, -1, 2],
+            ];
+
+            // Draw Board
+            drawCheckers();
+
+
+            // select checker
+            $(document).on('click', '.checker', function (e) {
+                $('.seld').removeClass('seld');
+                $(e.target).addClass('seld');
+            });
+
+            // select checker
+            $(document).on('click', '.checker', function (e) {
+                $('.seld').removeClass('seld');
+                $(e.target).addClass('seld');
+            });
+
+
+            // move checker
+
+            $(document).on('click', '.node', function (e) {
+                // check any checker has selected
+                if ($('.seld').length > 0) {
+
+                    var direction = 1;
+                    if ($('.seld').hasClass('white')) {
+                        direction = -1;
+                    }
+
+                    var seld = {
+                        x: $('.seld').attr('x'),
+                        y: $('.seld').attr('y')
+                    };
+
+                    var moveTo = {
+                        x: $(e.target).attr('x'),
+                        y: $(e.target).attr('y')
+                    };
+
+                    if (checkers[moveTo.y][moveTo.x] !== 0) {
+                        return false;
+                    }
+
+                    console.log(seld.y + '+' + direction + ' ' + moveTo.y)
+                    console.log(parseInt(seld.y) + direction);
+
+                    if (parseInt(seld.y) + direction != parseInt(moveTo.y)) {
+                        return false;
+                    }
+
+
+                    console.log('selected: ');
+                    console.log(seld);
+                    console.log('move to: ');
+                    console.log(moveTo);
+                    console.log('direction: ');
+                    console.log(direction);
+
+
+
+                    checkers[moveTo.y][moveTo.x] = checkers[seld.y][seld.x];
+                    checkers[seld.y][seld.x] = 0;
+                    drawCheckers();
+
+
+                }
+            });
+
+
+
+
+
+
+            // Draw chekers
+            function drawCheckers() {
+                var boardStart = {
+                    x: 30,
+                    y: 30
+                };
+                var checkerStr = '';
+                for (var x = 0; x < 8; x++) {
+                    for (var y = 0; y < 8; y++) {
+                        // if(checkers[y][x]>0){
+                        //     var color = 
+                        // }
+                        if (checkers[y][x] === 1)
+                            checkerStr += '<div class="checker black" x="' + x + '" y="' + y + '" style="top:' + (boardStart.y + 50 * y) + 'px; left:' + (boardStart.x + 50 * x) + 'px;"></div>';
+                        else if (checkers[y][x] === 2)
+                            checkerStr += '<div class="checker white" x="' + x + '" y="' + y + '" style="top:' + (boardStart.y + 50 * y) + 'px; left:' + (boardStart.x + 50 * x) + 'px;"></div>';
+                    }
+                }
+                $('#board').html(board + checkerStr);
+            }
+
+
+            function board() {
+                var brd = '';
+                for (var i = 0; i < 8; i++) {
+                    brd += '<div class="rw">';
+                    for (var j = 0; j < 8; j++) {
+                        if ((i + j) % 2 === 0)
+                            brd += '<div class="cl node" x="' + j + '"  y="' + i + '"></div>';
+                        else
+                            brd += '<div class="cl"></div>';
+                    }
+                    brd += '</div>';
+                }
+                return brd;
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>
