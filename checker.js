@@ -69,6 +69,20 @@ Checker.prototype.listen = function () {
   });
 };
 
+Checker.prototype.quit = function () {
+  var brd = "";
+  for (var i = 0; i < 8; i++) {
+    brd += '<div class="rw">';
+    for (var j = 0; j < 8; j++) {
+      if ((i + j) % 2 === 0)
+        brd += '<div class="cl node" x="' + j + '"  y="' + i + '"></div>';
+      else brd += '<div class="cl"></div>';
+    }
+    brd += "</div>";
+  }
+  return brd;
+};
+
 Checker.prototype.board = function () {
   var brd = "";
   for (var i = 0; i < 8; i++) {

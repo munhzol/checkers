@@ -44,7 +44,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#btnCreateGame", function () {
-    if ($("#username").val() === "") {
+    if (username === "") {
       alert("Please set your username");
     } else {
       game = new Checker("host", username);
@@ -218,7 +218,12 @@ $(document).ready(function () {
   });
 
 
-  
+  $( window ).unload(function() {
+    
+    return "Handler for .unload() called.";
+  });
+
+
 });
 
 var getQueryString = function (field, url) {
