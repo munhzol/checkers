@@ -218,10 +218,9 @@ $(document).ready(function () {
   });
 
 
-  $( window ).unload(function() {
-    
-    return "Handler for .unload() called.";
-  });
+  // $( window ).unload(function() {    
+  //   return "Handler for .unload() called.";
+  // });
 
 
 });
